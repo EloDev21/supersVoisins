@@ -13,14 +13,15 @@
         {% endblock %}
         <!-- Axentix JS minified version -->
         {% block js %}
+        
         <script src="https://cdn.jsdelivr.net/npm/axentix@1.3.4/dist/js/axentix.min.js"></script>
            
         {% endblock %}
     </head>
-    <body>
+    <body class="layout with-sidenav">
         <header>
             <nav class="navbar shadow-1 primary">
-              <a href="{{ path('app_home') }}"  class="navbar-brand">Les Super Voisins</a>
+              <a href="{{ path('app_home') }}" target="_blank" class="navbar-brand">Les Super Voisins</a>
               <div class="navbar-menu ml-auto">
                 <a class="navbar-link" href="{{ path('app_home') }}">Accueil</a>
                 <a class="navbar-link" href="#">Link 2</a>
@@ -29,9 +30,20 @@
               </div>
             </nav>
           </header>
-      
+                  
+    <div id="example-sidenav" data-ax="sidenav" class="sidenav shadow-1 large fixed white">
+      <div class="sidenav-header">
+        <button data-target="example-sidenav" class="sidenav-trigger"><i class="fas fa-times"></i></button>
+        <img class="sidenav-logo dropshadow-1" src="your_img_path" alt="Logo" />
+      </div>
+      <a href="#" class="sidenav-link active">Mon profil </a>
+      <a href="#" class="sidenav-link">Mes annonces </a>
+    </div>
           <main>
-          
+            <button data-target="example-sidenav"
+                class="btn rounded-1 press amaranth dark-1 sidenav-trigger hide-md-up">
+                   Open sidenav
+            </button>
             {% block body %}{% endblock %}
           </main>
       

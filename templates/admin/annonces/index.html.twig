@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des annonces{% endblock %}
+
+{% block body %}
+<h1>Gerer les annonces</h1>
+<div class="table-responsive">
+    {# <a href="{{ path('admin_annonces_ajout') }}" class="btn btn-primary">Ajouter une annonce</a> #}
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Date</th>
+          <th>Active</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+          {% for annonce in annonces %}
+              
+          <tr>
+              <td>{{annonce.id}}</td>
+              <td>{{annonce.title}}</td>
+              <td>{{annonce.createdAt|date}}</td>
+              <td>
+                <label class="custom-control-label" for="customSwitch1">
+
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1"
+                  
+                  {{(annonce.active) ? 'checked' : '' }} data-id="{{annonce.id}}">
+                </label>
+                
+
+              </td>
+              <td> <a href="#" class="btn btn-danger btn-press modal-trigger" data-target="modal-delete" data-id="{{annonce.id}}" data-titre="{{annonce.title}}">Supprimer</a></td>
+            </tr>
+          
+            {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {# modal #}
+  <div class="modal shadow-1 white modal-falling" id="modal-delete" data-ax="modal">
+    <div class="modal-header">Suppression d'une annonce</div>
+  <div class="divider"></div>
+  <div class="modal-content">
+  </div>
+  <div class="divider"></div>
+
+  <div class="modal-footer">
+    <a href="#" class="btn btn-danger">Valider</a>
+    <button data-target="modal-delete" class="ml-auto btn shadow-1 rounded-1 btn-small secondary modal-trigger">Annuler</button>
+  </div>
+</div>
+{% endblock %}
+{% block js %}
+<!-- Axentix JS minified version -->
+<script src="https://cdn.jsdelivr.net/npm/axentix@2.0.0-beta.5/dist/axentix.min.js"></script>
+<script>
+    window.onload = () =>{
+      let modal = new Axentix.Modal('#modal-delete');
+      let activer = document.querySelectorAll("[type=checkbox]");
+      for(let bouton of activer){
+        bouton.addEventListener("click",function(){
+          let xmlhttp = new XMLHttpRequest;
+          // xmlhttp.onreadystatechange = () => {
+            
+          // }
+          // pour aller chercher l'id du bouton sur lequel nous avons cliqué
+          xmlhttp.open("get",`/admin/annonces/activer/${this.dataset.id}`)
+          xmlhttp.send()
+        })
+      }
+      let supprimer = document.querySelectorAll(".modal-trigger")
+       for(let bouton of supprimer){
+        bouton.addEventListener("click",function(){
+          document.querySelectorAll(".modal-footer a").href = `/admin/annonces/supprimer/${this.dataset.id}`
+          document.querySelectorAll(".modal-content").innerText = ` Etes vous sur(e) de vouloir supprimer  l'annonce "${this.dataset.titre}"`
+        })
+      }
+    }
+</script>
+{% endblock %}

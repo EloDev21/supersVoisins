@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Inscription en attente {% endblock %}
+{% block body %}
+<h1>Inscription en attente</h1>
+
+<p>
+   Un email de confirmation vient de vous être envoyé par e-mail pour finaliser votre inscription: <br><br>
+    <a href="{{ signedUrl }}">Confirmer mon e-mail</a>.
+    Ce lien de validation expire dans {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    A bientôt !
+</p>
+{% endblock %}
